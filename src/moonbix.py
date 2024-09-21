@@ -36,7 +36,7 @@ class MoonBix:
             'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/third-party/access/accessToken',
             json=json_data,
         )
-
+        
         if response.status_code != 200:
             return 'fail'
 
@@ -46,6 +46,8 @@ class MoonBix:
 
         self.session.headers['x-growth-token']= accessToken
         
+        
+
         return 'success'
     
     def user_info(self):
@@ -110,3 +112,4 @@ class MoonBix:
             return 'success'
         
         return response.text
+

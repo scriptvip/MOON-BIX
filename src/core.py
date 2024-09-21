@@ -37,57 +37,77 @@ def start_script():
             log(f'{Colors.YELLOW} Trying To Login ...')
             res = account.login()
 
-            
-
             if res == 'success': log(f'{Colors.GREEN} Done Login Success !')
             else:
                 if res == 'fail':
-                    log(f' {Colors.RED} Faild To Login Please Check Account Token !')
+                    log(f'{Colors.RED} Faild To Login Please Check Account Token !')
                 else:
-                    log(f' {Colors.BLACK} {res}')
-                    log(f' {Colors.RED} UnExpected Erro Please Contact With Devoloper To Fix !')
+                    log(f'{Colors.BLACK} {res}')
+                    log(f'{Colors.RED} UnExpected Erro Please Contact With Devoloper To Fix !')
                 continue
             
-            countdown_timer(config('SMALL_DELAY', 3))
+            
+            
+            
+            while True:
+                res = account.user_info()
+                if not res['success']:
+                    log(f'{Colors.RED} Faild To Retrive Account info !')
+                    break
+                total_attempts = res['data']['metaInfo']['totalAttempts']
+                avilble_attempts = total_attempts - res['data']['metaInfo']['consumedAttempts']
+                log(f'{Colors.BLACK} ---------------------------------')
+                log(f"{Colors.BLUE} Account Balance : {Colors.GREEN}{res['data']['metaInfo']['totalGrade']}")
+                log(f'{Colors.BLUE} Total Tickets : {Colors.GREEN}{total_attempts}')
+                log(f'{Colors.BLUE} Avilble Tickets : {Colors.GREEN}{avilble_attempts}')
+                
 
-            log(f' {Colors.BLUE}Starting game !')
-            res = account.start_game()
-            
-            if res == 'success': log(f' {Colors.GREEN}Done Game Has Started !')
-            else:
-                if res == 'attempts not enough':
-                    log(f' {Colors.BLUE}Attempts not enough !')
-                else :
-                    log(f' {Colors.BLACK} {res}')
-                    log(f' {Colors.RED} UnExpected Erro Please Contact With Devoloper To Fix !')
-                continue
-            
-            countdown_timer(config('GAME_TIME', 42))
+                if avilble_attempts < 1:
+                    log(f'{Colors.YELLOW} No Tickets Avilable !')
+                    break
 
-            log(f' {Colors.BLUE}Getting game data ... ')
-            
-            res = account.game_data()
+                countdown_timer(config('SMALL_DELAY', 3))
 
-            if res == 'success':
-                log(f' {Colors.GREEN}Done Game Data Dumped !')
-            else:
-                log(f' {Colors.RED}Faild To Dump Game Data !')
-                log(f' {Colors.RED}If This message appear more than onece Please Tell The Devoloer [WARRING] !')
-                continue
+                log(f' {Colors.BLUE}Starting game !')
+                res = account.start_game()
+                
+                if res == 'success': log(f' {Colors.GREEN}Done Game Has Started !')
+                else:
+                    if res == 'attempts not enough':
+                        log(f' {Colors.BLUE}Attempts not enough !')
+                    else :
+                        log(f' {Colors.BLACK} {res}')
+                        log(f' {Colors.RED} UnExpected Erro Please Contact With Devoloper To Fix !')
+                    continue
+                
+                countdown_timer(config('GAME_TIME', 42))
 
-            countdown_timer(config('SMALL_DELAY', 3))
-            
-            res = account.complete_game()
-            
-            log(f' {Colors.BLUE}Completing The Game ...')
+                log(f' {Colors.BLUE}Getting game data ... ')
+                
+                res = account.game_data()
 
-            if res == 'success':
-                log(f' {Colors.GREEN}Success + {account.game["log"]} (^__*)')
-            else:
-                log(f' {Colors.RED}Faild To Dump Game Data !')
-                log(f' {Colors.RED}If This message appear more than onece Please Tell The Devoloer [WARRING] !')
-                continue
-            
+                if res == 'success':
+                    log(f' {Colors.GREEN}Done Game Data Dumped !')
+                else:
+                    log(f' {Colors.RED}Faild To Dump Game Data !')
+                    log(f' {Colors.RED}If This message appear more than onece Please Tell The Devoloer [WARRING] !')
+                    continue
+
+                countdown_timer(config('SMALL_DELAY', 3))
+                
+                res = account.complete_game()
+                
+                log(f' {Colors.BLUE}Completing The Game ...')
+
+                if res == 'success':
+                    log(f' {Colors.GREEN}Success + {account.game["log"]} (^__*)')
+                else:
+                    log(f' {Colors.RED}Faild To Dump Game Data !')
+                    log(f' {Colors.RED}If This message appear more than onece Please Tell The Devoloer [WARRING] !')
+                    continue
+                
+                countdown_timer(config('DELAY_AFTER_GAME', 5))
+
             countdown_timer(config('SMALL_DELAY', 3))
         
         countdown_timer(config('DELAY_BEFORE_RESTART', 70))
@@ -151,3 +171,4 @@ def about_devoloper():
 def exit_code():
     log_line()
     log(f'{Colors.RED} Exiting ...')
+    exit()
