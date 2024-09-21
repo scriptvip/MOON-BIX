@@ -1,0 +1,6 @@
+{
+    "TIME_BETWEEN_ACCOUNTS": 10,
+    "SMALL_DELAY": 3,
+    "GAME_TIME": 42,
+    "DELAY_BEFORE_RESTART": 700
+}
