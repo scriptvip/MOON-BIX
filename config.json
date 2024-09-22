@@ -3,5 +3,6 @@
     "SMALL_DELAY": 3,
     "GAME_TIME": 42,
     "DELAY_BEFORE_RESTART": 700,
-    "DELAY_AFTER_GAME": 5
+    "DELAY_AFTER_GAME": 5,
+    "MAX_RETRY": 4
 }
