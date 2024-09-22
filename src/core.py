@@ -52,6 +52,7 @@ def start_script():
                     if not res['success']:
                         log(f'{Colors.RED} Faild To Retrive Account info !')
                         break
+                    time.sleep(3)
                     total_attempts = res['data']['metaInfo']['totalAttempts']
                     avilble_attempts = total_attempts - res['data']['metaInfo']['consumedAttempts']
                     log(f'{Colors.BLACK} ---------------------------------')
