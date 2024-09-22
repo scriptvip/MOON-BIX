@@ -32,7 +32,7 @@ def start_script():
             try:
                 log_line()
                 countdown_timer(config('TIME_BETWEEN_ACCOUNTS', 10))
-                account = MoonBix(token)
+                account = MoonBix(token, random_proxy(), config('TIMEOUT', 6))
                 log(f'{Colors.BLUE} Account Number : {Colors.GREEN}{index+1}')
                 log(f'{Colors.BLUE} Account Username : {Colors.GREEN}{get_username(token)}')
                 log(f'{Colors.YELLOW} Trying To Login ...')

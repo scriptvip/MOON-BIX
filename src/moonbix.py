@@ -2,7 +2,7 @@ import requests
 from fake_useragent import UserAgent
 
 class MoonBix:
-    def __init__(self, token):
+    def __init__(self, token, proxy, timeout):
         self.session = requests.session()
         self.session.headers.update({
             'authority': 'www.binance.com',
@@ -22,6 +22,9 @@ class MoonBix:
             'sec-fetch-site': 'same-origin',
             'user-agent': UserAgent().random
         })
+        if proxy:
+            self.session.proxies.update(proxy)
+        self.timeout = timeout
         self.token = token
         
         self.game_response = None
@@ -35,6 +38,7 @@ class MoonBix:
         response = self.session.post(
             'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/third-party/access/accessToken',
             json=json_data,
+            timeout=self.timeout
         )
         
         if response.status_code != 200:
@@ -58,6 +62,7 @@ class MoonBix:
         response = self.session.post(
             'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/user/user-info',
             json=json_data,
+            timeout=self.timeout
         )
         
         return response.json()
@@ -70,6 +75,7 @@ class MoonBix:
         response = self.session.post(
             'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/game/start',
             json=json_data,
+            timeout=self.timeout
         )
 
 
@@ -86,7 +92,7 @@ class MoonBix:
     def game_data(self):
         url = 'https://vemid42929.pythonanywhere.com/api/v1/moonbix/play'
 
-        response = requests.get(url, json=self.game_response).json()
+        response = requests.get(url, json=self.game_response, timeout=self.timeout).json()
 
         if response['message']=='success':
             self.game = response['game']
@@ -106,6 +112,7 @@ class MoonBix:
         response = self.session.post(
             'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/game/complete',
             json=json_data,
+            timeout=self.timeout
         )
 
         if  response.json()['success']:

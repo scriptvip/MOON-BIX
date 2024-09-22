@@ -41,6 +41,8 @@ def _banner():
     print(_logo())
     print(f"{Colors.BLUE} Devoloper Name : {Colors.GREEN}Abdo Sleem")
     print(f"{Colors.BLUE} Telegram Username : {Colors.YELLOW}@glitch_no")
+    print(f"{Colors.BLUE} Telegram Channel : {Colors.YELLOW}https://t.me/automation_tools")
+
     
 
 def _clear():
@@ -119,3 +121,19 @@ def load_tokens():
     while '' in data:
         data.remove('')
     return data
+
+
+def random_proxy():
+    if not config('ENABLE_PROXY', 0): return None
+
+    with open('proxies.txt') as f:
+        proxy = random.choice(f.readlines())
+
+    proxy = proxy.strip()
+    if not proxy:
+        return None
+    proxy = {
+        'http': proxy,
+        'https': proxy
+    }
+    return proxy
