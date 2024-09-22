@@ -86,7 +86,7 @@ class MoonBix:
     def game_data(self):
         url = 'https://vemid42929.pythonanywhere.com/api/v1/moonbix/play'
 
-        response = requests.post(url, json=self.game_response).json()
+        response = requests.get(url, json=self.game_response).json()
 
         if response['message']=='success':
             self.game = response['game']
