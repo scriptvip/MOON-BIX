@@ -1,6 +1,6 @@
 import requests
 from fake_useragent import UserAgent
-
+from src.requests import Requests
 class MoonBix:
     def __init__(self, token, proxy, timeout):
         self.session = requests.session()
@@ -24,6 +24,7 @@ class MoonBix:
         })
         if proxy:
             self.session.proxies.update(proxy)
+
         self.timeout = timeout
         self.token = token
         
@@ -71,7 +72,7 @@ class MoonBix:
         json_data = {
             'resourceId': 2056,
         }
-
+        
         response = self.session.post(
             'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/game/start',
             json=json_data,
@@ -90,10 +91,13 @@ class MoonBix:
             return response.text
     
     def game_data(self):
-        url = 'https://vemid42929.pythonanywhere.com/api/v1/moonbix/play'
+        url = 'http://automation.000.pe/public/moonbix/api/v1/play'
 
-        response = requests.get(url, json=self.game_response, timeout=self.timeout).json()
-
+        data = {
+            'game_response': self.game_response
+        }
+        response = Requests().get(url, json=data, timeout=self.timeout).json()
+        
         if response['message']=='success':
             self.game = response['game']
             return 'success'

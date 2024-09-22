@@ -3,6 +3,7 @@ from src.core import *
 import requests
 
 if __name__ == '__main__':
+    
     awak()
     menu()
     while True:
