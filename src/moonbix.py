@@ -54,6 +54,25 @@ class MoonBix:
 
         return 'success'
     
+    def daily_login(self):
+        json_data = {
+            'resourceIdList': [
+                2057,
+            ],
+            'referralCode': None,
+        }
+        response = self.session.post(
+            'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/task/complete',
+            json=json_data,
+        )
+        res = response.json()
+        if 'data' in res:
+            if res['data'] and res['data'].get('type', None)=='LOGIN':
+                return 'claimed'
+            return 'already_claimed'
+        return response.text
+    
+
     def user_info(self):
         json_data = {
             'resourceId': 2056,

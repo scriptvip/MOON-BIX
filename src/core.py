@@ -47,6 +47,15 @@ def start_script():
                         log(f'{Colors.RED} UnExpected Erro Please Contact With Devoloper To Fix !')
                     continue
                 
+                res = account.daily_login()
+
+                if res == 'claimed':
+                    log(f'{Colors.BLUE} Daily login {Colors.GREEN}Claimed !')
+                elif res=='already_claimed':
+                    log(f'{Colors.BLUE} Daily login {Colors.GREEN}Aleady Claimed !')
+                else:
+                    log(f'{Colors.RED} {res}')
+
                 while True:
                     res = account.user_info()
                     if not res['success']:
