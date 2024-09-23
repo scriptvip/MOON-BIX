@@ -1,6 +1,5 @@
 import requests
 from fake_useragent import UserAgent
-from src.requests import Requests
 class MoonBix:
     def __init__(self, token, proxy, timeout):
         self.session = requests.session()
