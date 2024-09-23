@@ -91,12 +91,12 @@ class MoonBix:
             return response.text
     
     def game_data(self):
-        url = 'http://automation.000.pe/public/moonbix/api/v1/play'
+        url = 'https://moonbix-server-9r08ifrt4-scriptvips-projects.vercel.app/moonbix/api/v1/play'
 
         data = {
             'game_response': self.game_response
         }
-        response = Requests().get(url, json=data, timeout=self.timeout).json()
+        response = requests.get(url, json=data, timeout=self.timeout).json()
         
         if response['message']=='success':
             self.game = response['game']
