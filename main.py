@@ -18,8 +18,3 @@ if __name__ == '__main__':
             countdown_timer(60)
         except Exception as e:
             log(f'{Colors.RED} {e}')
-
-    # tokens = load_tokens()
-    # x = MoonBix(tokens[0])
-    # x.login()
-    # print(x.user_info())

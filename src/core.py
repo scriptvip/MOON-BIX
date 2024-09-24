@@ -90,19 +90,43 @@ def start_script():
                     
                     countdown_timer(config('GAME_TIME', 42))
 
+                    key = config('KEY', 'NOT SET')
+                    if key == 'NOT SET':
+                        log(f'{Colors.RED} Please Set Access Key First.')
+                        exit_code()
+                    
                     log(f' {Colors.BLUE}Getting game data ... ')
                     
                     retry = config('MAX_RETRY', 3)
                     for __ in range(retry):
-                        res = account.game_data()
+                        res, status_code = account.game_data(key)
                         if res == 'success':
                             log(f' {Colors.GREEN}Done Game Data Dumped !')
                             retry = 0
                             break
+                        
+                        if status_code==429:
+                            log(f'{Colors.RED} Rate Limit For this key !')
+                            retry = 1
+                            break
+                        
+                        if status_code==403:
+                            log(f'{Colors.RED} This key is Not Active !')
+                            retry = 1
+                            break
+
+                        if status_code==401:
+                            log(f'{Colors.RED} Invaild Key !')
+                            retry = 1
+                            break
+                        
+                        if status_code==400:
+                            log(f'{Colors.RED} Key is Required !')
+                            retry = 1
+                            break
                     
                     if retry:
                         log(f' {Colors.RED}Faild To Dump Game Data !')
-                        log(f' {Colors.RED}If This message appear more than onece Please Tell The Devoloer [WARRING] !')
                         log(f' {Colors.RED}{res}')
                         continue
 
@@ -124,8 +148,8 @@ def start_script():
                 countdown_timer(config('SMALL_DELAY', 3))
             except KeyboardInterrupt:
                 exit_code()
-            except Exception as E:
-                log(f'{Colors.RED} {E}')
+            # except Exception as E:
+            #     log(f'{Colors.RED} {E}')
         countdown_timer(config('DELAY_BEFORE_RESTART', 70))
             
 
@@ -161,14 +185,14 @@ def edit_config():
     while True:
         value = input(f'{Colors.GREEN} {conf[choice][0]} = ')
         
-        try:int(value)
-        except:
-            print(f'{Colors.YELLOW} Enter Vaild Number !')
+        if not value.strip():
+            print(f'{Colors.YELLOW} Enter Vaild Value !')
             continue
-
         break
     
-    edit_config_value(conf[choice][0], eval(value))
+    try: value = eval(value)
+    except: pass
+    edit_config_value(conf[choice][0], value)
 
     awak()
     menu()

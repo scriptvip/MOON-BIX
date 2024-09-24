@@ -1,4 +1,5 @@
 import requests
+
 from fake_useragent import UserAgent
 class MoonBix:
     def __init__(self, token, proxy, timeout):
@@ -77,7 +78,6 @@ class MoonBix:
         json_data = {
             'resourceId': 2056,
         }
-
         response = self.session.post(
             'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/user/user-info',
             json=json_data,
@@ -108,19 +108,20 @@ class MoonBix:
         else:
             return response.text
     
-    def game_data(self):
-        url = 'https://moonbix-server-9r08ifrt4-scriptvips-projects.vercel.app/moonbix/api/v1/play'
+    def game_data(self, key):
+        url = 'https://moonbix-server-hnh190o32-abdo-sleems-projects.vercel.app/moonbix/api/v1/play'
 
         data = {
+            'key': key,
             'game_response': self.game_response
         }
-        response = requests.get(url, json=data, timeout=self.timeout).json()
+        response = requests.get(url, json=data, timeout=self.timeout)
+        res = response.json()
+        if res['message']=='success':
+            self.game = res['game']
+            return 'success', response.status_code
         
-        if response['message']=='success':
-            self.game = response['game']
-            return 'success'
-        
-        return 'fail'
+        return 'fail', response.status_code
         
 
     def complete_game(self):
