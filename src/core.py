@@ -148,8 +148,8 @@ def start_script():
                 countdown_timer(config('SMALL_DELAY', 3))
             except KeyboardInterrupt:
                 exit_code()
-            # except Exception as E:
-            #     log(f'{Colors.RED} {E}')
+            except Exception as E:
+                log(f'{Colors.RED} {E}')
         countdown_timer(config('DELAY_BEFORE_RESTART', 70))
             
 
