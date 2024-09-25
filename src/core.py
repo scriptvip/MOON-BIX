@@ -31,7 +31,7 @@ def start_script():
         for index, token in enumerate(tokens):
             try:
                 log_line()
-                countdown_timer(config('TIME_BETWEEN_ACCOUNTS', 10))
+                countdown_timer(random.randint(config('MIN_TIME_BETWEEN_ACCOUNTS', 10), config('MAX_TIME_BETWEEN_ACCOUNTS', 15)))
                 account = MoonBix(token, random_proxy(), config('TIMEOUT', 6))
                 log(f'{Colors.BLUE} Account Number : {Colors.GREEN}{index+1}')
                 log(f'{Colors.BLUE} Account Username : {Colors.GREEN}{get_username(token)}')
@@ -143,14 +143,14 @@ def start_script():
                         log(f' {Colors.RED}If This message appear more than onece Please Tell The Devoloer [WARRING] !')
                         continue
                     
-                    countdown_timer(config('DELAY_AFTER_GAME', 5))
+                    countdown_timer(random.randint(config('MIN_DELAY_AFTER_GAME', 5), config('MAX_DELAY_AFTER_GAME', 9)))
 
                 countdown_timer(config('SMALL_DELAY', 3))
             except KeyboardInterrupt:
                 exit_code()
             except Exception as E:
                 log(f'{Colors.RED} {E}')
-        countdown_timer(config('DELAY_BEFORE_RESTART', 70))
+        countdown_timer(random.randint(config('MIN_DELAY_BEFORE_RESTART', 700), config('MAX_DELAY_BEFORE_RESTART', 1000)))
             
 
 def edit_config():
