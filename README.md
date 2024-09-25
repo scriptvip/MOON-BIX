@@ -41,7 +41,7 @@ Moonbix automates gameplay by mimicking human behavior, ensuring your activity a
    pip install -r requirements.txt
    ```
 
-5. **Set Up Your Token**  
+5. **Set Up Your QueryID's**  
    Open the `tokens.txt` file using a text editor (e.g., nano):
    ```shell
    nano tokens.txt
