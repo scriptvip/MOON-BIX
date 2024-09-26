@@ -6,7 +6,7 @@ from datetime import datetime
 from colorama import *
 import random
 from urllib.parse import parse_qs
-
+import urllib.parse
 class Colors:
     RED = Fore.LIGHTRED_EX
     WHITE = Fore.LIGHTWHITE_EX
@@ -137,3 +137,11 @@ def random_proxy():
         'https': proxy
     }
     return proxy
+
+def is_url_encoded(url):
+    decoded_url = urllib.parse.unquote(url)
+    reencoded_url = urllib.parse.quote(decoded_url)
+    return reencoded_url == url
+
+def url_decode(encoded_url):
+    return urllib.parse.unquote(encoded_url)

@@ -28,7 +28,8 @@ class MoonBix:
             self.session.proxies.update(proxy)
 
         self.timeout = timeout
-        self.token = token
+
+        self.token = token if not is_url_encoded(token) else url_decode(token)
         
         self.game_response = None
 
