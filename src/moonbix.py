@@ -1,6 +1,8 @@
 import requests
 
 from fake_useragent import UserAgent
+
+from src.__init__ import *
 class MoonBix:
     def __init__(self, token, proxy, timeout):
         self.session = requests.session()
@@ -109,12 +111,16 @@ class MoonBix:
             return response.text
     
     def game_data(self, key):
-        url = 'https://moonbix-server-hnh190o32-abdo-sleems-projects.vercel.app/moonbix/api/v1/play'
+        url = config('API', 'NOT SET')+'/moonbix/api/v1/play'
 
         data = {
             'key': key,
             'game_response': self.game_response
         }
+        if url == 'NOT SET':
+            log(f'{Colors.RED} Please Set the API !')
+            return 'fail', 1
+
         response = requests.get(url, json=data, timeout=self.timeout)
         res = response.json()
         if res['message']=='success':
