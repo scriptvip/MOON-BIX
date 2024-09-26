@@ -1,6 +1,6 @@
 {
-    "API": "https://moonbix-server-jjc0baby2-abdo-sleems-projects-73cffea5.vercel.app",
-    "KEY": "NOT KEY",
+    "API": "NOT SET",
+    "KEY": "NOT SET",
     "ENABLE_PROXY": 0,
     "MIN_TIME_BETWEEN_ACCOUNTS": 10,
     "MAX_TIME_BETWEEN_ACCOUNTS": 15,
