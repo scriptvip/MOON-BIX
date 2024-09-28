@@ -7,15 +7,15 @@ class MoonBix:
     def __init__(self, token, proxy, timeout):
         self.session = requests.session()
         self.session.headers.update({
-            'authority': 'www.binance.com',
+            'authority': config('BASE_URL', 'https://www.binance.com').strip('/').split('/')[-1],
             'accept': '*/*',
             'accept-language': 'en-EG,en;q=0.9,ar-EG;q=0.8,ar;q=0.7,en-GB;q=0.6,en-US;q=0.5',
             'bnc-location': '',
             'clienttype': 'web',
             'content-type': 'application/json',
             'lang': 'en',
-            'origin': 'https://www.binance.com',
-            'referer': 'https://www.binance.com/en/game/tg/moon-bix',
+            'origin': config('BASE_URL', 'https://www.binance.com'),
+            'referer': self.endpoint('en/game/tg/moon-bix'),
             'sec-ch-ua': '"Not.A/Brand";v="8", "Chromium";v="114", "Google Chrome";v="114"',
             'sec-ch-ua-mobile': '?0',
             'sec-ch-ua-platform': '"Windows"',
@@ -32,6 +32,9 @@ class MoonBix:
         self.token = token if not is_url_encoded(token) else url_decode(token)
         
         self.game_response = None
+    
+    def endpoint(self, path):
+        return f"{config('BASE_URL', 'https://www.binance.com')}/{path}"
 
     def login(self):
         json_data = {
@@ -40,7 +43,7 @@ class MoonBix:
         }
         
         response = self.session.post(
-            'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/third-party/access/accessToken',
+            self.endpoint('bapi/growth/v1/friendly/growth-paas/third-party/access/accessToken'),
             json=json_data,
             timeout=self.timeout
         )
@@ -66,7 +69,7 @@ class MoonBix:
             'referralCode': None,
         }
         response = self.session.post(
-            'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/task/complete',
+            self.endpoint('bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/task/complete'),
             json=json_data,
         )
         res = response.json()
@@ -82,7 +85,7 @@ class MoonBix:
             'resourceId': 2056,
         }
         response = self.session.post(
-            'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/user/user-info',
+            self.endpoint('bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/user/user-info'),
             json=json_data,
             timeout=self.timeout
         )
@@ -95,7 +98,7 @@ class MoonBix:
         }
         
         response = self.session.post(
-            'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/game/start',
+            self.endpoint('bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/game/start'),
             json=json_data,
             timeout=self.timeout
         )
@@ -140,7 +143,7 @@ class MoonBix:
         }
 
         response = self.session.post(
-            'https://www.binance.com/bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/game/complete',
+            self.endpoint('bapi/growth/v1/friendly/growth-paas/mini-app-activity/third-party/game/complete'),
             json=json_data,
             timeout=self.timeout
         )
