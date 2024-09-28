@@ -68,4 +68,7 @@ For continuous operation, you can deploy the bot script on a VPS/RDP. If you're 
 
 Stay in the loop on upcoming features, improvements, and new projects by following the official channel: [@automation_tools](https://t.me/automation_tools).
 
+## API Access
+
+This server is restricted to premium members only. For access inquiries, please contact [glitch_no](https://t.me/glitch_no) on telegram.
 ---
